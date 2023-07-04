@@ -52,70 +52,80 @@
 		--cssBorderColor:{cssBorderColor};
 	"
 >
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<nav on:click style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
-		<ul
-			class="pagination"
-			class:pagination-sm={propSize === 'small'}
-			class:pagination-lg={propSize === 'large'}
-		>
-			{#if propActivePage === 1}
-				<li class="page-item disabled" style="cursor:not-allowed">
-					<span class="page-link">{propPrevious}</span>
-				</li>
-			{:else}
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<li
-					on:click={() => {
-						propActivePage = propActivePage - 1;
-						dispatch('eventChange', {
-							numberActivePage: propActivePage
-						});
-					}}
-					class="page-item"
-					style="cursor: pointer"
-				>
-					<span class="page-link">{propPrevious}</span>
-				</li>
-			{/if}
+	<div on:click on:keydown role="button" tabindex="0">
+		<nav style="overflow-x: auto; -webkit-overflow-scrolling: touch;">
+			<ul
+				class="pagination"
+				class:pagination-sm={propSize === 'small'}
+				class:pagination-lg={propSize === 'large'}
+			>
+				{#if propActivePage === 1}
+					<li class="page-item disabled" style="cursor:not-allowed">
+						<span class="page-link">{propPrevious}</span>
+					</li>
+				{:else}
+					<li class="page-item" style="cursor: pointer">
+						<div
+							on:keydown
+							role="button"
+							tabindex="0"
+							on:click={() => {
+								propActivePage = propActivePage - 1;
+								dispatch('eventChange', {
+									numberActivePage: propActivePage
+								});
+							}}
+						>
+							<span class="page-link">{propPrevious}</span>
+						</div>
+					</li>
+				{/if}
 
-			{#each Array(propNumberOfPages) as _, numberCounter}
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<li
-					on:click={() => {
-						propActivePage = numberCounter + 1;
-						dispatch('eventChange', {
-							numberActivePage: propActivePage
-						});
-					}}
-					class="page-item"
-					class:active={numberCounter + 1 === propActivePage}
-					style:cursor={propActivePage === numberCounter + 1 ? 'default' : 'pointer'}
-				>
-					<span class="page-link">{numberCounter + 1}</span>
-				</li>
-			{/each}
-			{#if propActivePage === propNumberOfPages}
-				<li class="page-item disabled" style="cursor:not-allowed;">
-					<span class="page-link">{propNext}</span>
-				</li>
-			{:else}
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<li
-					on:click={() => {
-						propActivePage = propActivePage + 1;
-						dispatch('eventChange', {
-							numberActivePage: propActivePage
-						});
-					}}
-					class="page-item"
-					style="cursor:pointer"
-				>
-					<span class="page-link">{propNext}</span>
-				</li>
-			{/if}
-		</ul>
-	</nav>
+				{#each Array(propNumberOfPages) as _, numberCounter}
+					<li
+						class="page-item"
+						class:active={numberCounter + 1 === propActivePage}
+						style:cursor={propActivePage === numberCounter + 1 ? 'default' : 'pointer'}
+					>
+						<div
+							on:keydown
+							role="button"
+							tabindex="0"
+							on:click={() => {
+								propActivePage = numberCounter + 1;
+								dispatch('eventChange', {
+									numberActivePage: propActivePage
+								});
+							}}
+						>
+							<span class="page-link">{numberCounter + 1}</span>
+						</div>
+					</li>
+				{/each}
+				{#if propActivePage === propNumberOfPages}
+					<li class="page-item disabled" style="cursor:not-allowed;">
+						<span class="page-link">{propNext}</span>
+					</li>
+				{:else}
+					<li class="page-item" style="cursor:pointer">
+						<div
+							on:keydown
+							role="button"
+							tabindex="0"
+							on:click={() => {
+								propActivePage = propActivePage + 1;
+								dispatch('eventChange', {
+									numberActivePage: propActivePage
+								});
+							}}
+						>
+							<span class="page-link">{propNext}</span>
+						</div>
+					</li>
+				{/if}
+			</ul>
+		</nav>
+	</div>
 </div>
 
 <style>
@@ -186,7 +196,7 @@
 		outline: 0;
 		box-shadow: var(--bs-pagination-focus-box-shadow);
 	}
-	.active > .page-link {
+	.active .page-link {
 		z-index: 3;
 		color: var(--bs-pagination-active-color);
 		background-color: var(--bs-pagination-active-bg);
