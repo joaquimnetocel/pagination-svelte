@@ -1,4 +1,4 @@
 // Reexport your entry components here
-import Pagination from './Pagination.svelte';
+import PaginationItems from './PaginationItems.svelte';
 
-export default Pagination;
+export { PaginationItems };

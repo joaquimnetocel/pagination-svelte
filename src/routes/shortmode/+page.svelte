@@ -7,8 +7,8 @@
 	propTag="button"
 	propDisabledStyle="background: darkgrey;"
 	propActiveStyle="background: blue;color:white;"
-	propNumberOfRows={28}
-	propNumberOfRowsPerPage={5}
+	propNumberOfPages={60}
+	propShortModeLimit={50}
 	bind:propActivePage={stateActivePage}
 />
 <p>
