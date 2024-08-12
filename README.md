@@ -27,9 +27,9 @@ npm install pagination-svelte
 
 ## DEMO
 
-[REPL: BASIC EXAMPLE](https://svelte.dev/repl/1cb3d1d2e60546569c80258abb5834e5)
-[REPL: BOOTSTRAP EXAMPLE](https://svelte.dev/repl/00a67cfddc074cbbb22823f46fc5cc76)
-[REPL: SHORT MODE EXAMPLE](https://svelte.dev/repl/6208d3cbba394a14bb5a7529f78748b6)
+- [REPL: BASIC EXAMPLE](https://svelte.dev/repl/1cb3d1d2e60546569c80258abb5834e5)
+- [REPL: BOOTSTRAP EXAMPLE](https://svelte.dev/repl/00a67cfddc074cbbb22823f46fc5cc76)
+- [REPL: SHORT MODE EXAMPLE](https://svelte.dev/repl/6208d3cbba394a14bb5a7529f78748b6)
 
 ## EXAMPLES AND DEVELOPING
 
