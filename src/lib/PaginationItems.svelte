@@ -43,6 +43,8 @@
 		propShortModeLimit?: number;
 	} = $props();
 
+	let stateShowInput = $state(false);
+
 	$effect(() => {
 		if (propNumberOfRows !== undefined && propNumberOfRowsPerPage !== undefined) {
 			propNumberOfPages =
@@ -53,6 +55,27 @@
 	});
 
 	let derivedShortMode = $derived(propShortMode === true || propNumberOfPages > propShortModeLimit);
+
+	function functionOnKeyDown(e: { keyCode: number }) {
+		switch (e.keyCode) {
+			case 13:
+				stateShowInput = false;
+				break;
+		}
+	}
+
+	function functionOnInput(event: Event & { currentTarget: EventTarget & HTMLInputElement }) {
+		event.currentTarget.value = event.currentTarget.value.replace(/[^0-9]*/g, '');
+		if (event.currentTarget.value !== '' && parseInt(event.currentTarget.value)) {
+			if (parseInt(event.currentTarget.value) > propNumberOfPages) {
+				propActivePage = propNumberOfPages;
+				return;
+			}
+			if (parseInt(event.currentTarget.value) > 0) {
+				propActivePage = parseInt(event.currentTarget.value);
+			}
+		}
+	}
 </script>
 
 <!-- FAST BACKWARD -->
@@ -148,19 +171,39 @@
 {/if}
 <!---->
 {#if derivedShortMode}
-	<svelte:element
-		this={propTag}
-		style={`${propRest.style ?? ''};${propActiveStyle};${'cursor:default;'}`}
-		class={`${propRest.class ?? ''} ${propActiveClass}`}
-	>
-		{#if propInnerTag}
-			<svelte:element this={propInnerTag} style={propInnerStyle} class={propInnerClass}>
+	{#if stateShowInput}
+		<input
+			class={`${propRest.class ?? ''} ${propActiveClass}`}
+			style={`${propRest.style ?? ''};${propActiveStyle};${'width:40px;'}`}
+			size="1"
+			type="number"
+			min="1"
+			max={propNumberOfPages}
+			step="1"
+			value={propActivePage}
+			onkeydown={functionOnKeyDown}
+			oninput={functionOnInput}
+			onfocusout={() => {
+				stateShowInput = false;
+			}}
+		/>
+	{:else}
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
+		<svelte:element
+			this={propTag}
+			style={`${propRest.style ?? ''};${propActiveStyle};${'cursor:default;'}`}
+			class={`${propRest.class ?? ''} ${propActiveClass}`}
+			onclick={() => (stateShowInput = true)}
+		>
+			{#if propInnerTag}
+				<svelte:element this={propInnerTag} style={propInnerStyle} class={propInnerClass}>
+					{propActivePage}
+				</svelte:element>
+			{:else}
 				{propActivePage}
-			</svelte:element>
-		{:else}
-			{propActivePage}
-		{/if}
-	</svelte:element>
+			{/if}
+		</svelte:element>
+	{/if}
 {:else}
 	{#each Array(propNumberOfPages) as _, numberCounter}
 		<!-- svelte-ignore a11y_no_static_element_interactions -->

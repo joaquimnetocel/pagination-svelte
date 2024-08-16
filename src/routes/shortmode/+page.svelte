@@ -3,6 +3,8 @@
 	let stateActivePage = $state(1);
 </script>
 
+<div>Use the arrows or click the number to type the page.</div>
+
 <PaginationItems
 	propTag="button"
 	propDisabledStyle="background: darkgrey;"
