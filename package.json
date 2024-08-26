@@ -1,6 +1,6 @@
 {
 	"name": "pagination-svelte",
-	"version": "1.0.4",
+	"version": "1.0.5",
 	"description": "Pagination component for Svelte.",
 	"repository": {
 		"type": "git",
